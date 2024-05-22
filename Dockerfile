@@ -14,12 +14,14 @@ COPY . /usr/local/granite
 # Add granite user
 RUN groupadd -g 1001 granite && useradd -u 1001 -g granite granite
 RUN mkdir /home/granite
+RUN mkdir /.cache
 
 #Add permissions
 RUN chown -R granite:granite /usr/local/granite && \
     chgrp -R 0 /usr/local/granite && \
     chmod -R 775 /usr/local/granite && \
-    chmod -R 775 /home/granite
+    chmod -R 775 /home/granite && \
+    chmod -R 775 /.cache
 #Specify the user with UID as OpenShift assigns random
 
 USER 1001
