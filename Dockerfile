@@ -38,5 +38,5 @@ RUN git clone https://github.com/huggingface/transformers && \
     cd transformers/ && \
     pip install ./
 
-CMD ["python3", "app.py"]
+CMD ["python3", "/usr/local/granite/flask-app/app.py"]
 
