@@ -25,7 +25,7 @@ def query():
     else:
         return jsonify({'error': 'Failed to get response from LLM service'}), response.status_code
 
-@app.route('/api/query', methods=['POST'])
+@app.route('/api/query', methods=['PUT'])
 def api_query():
     data = request.json
     if 'query' not in data:
