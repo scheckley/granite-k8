@@ -39,3 +39,5 @@ RUN git clone https://github.com/huggingface/transformers && \
     pip install ./
 
 CMD ["python3", "app.py"]
+
+CMD ["bash"]
