@@ -8,7 +8,7 @@ app = Flask(__name__)
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 # URL of the IBM Granite LLM service
-LLM_SERVICE_URL = 'https://granite-k8-scp012-dxm01.apps.ocp.osprey.hartree.stfc.ac.uk/'
+LLM_SERVICE_URL = 'https://xxx'
 
 @app.route('/')
 def index():
