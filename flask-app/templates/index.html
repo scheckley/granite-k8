@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query IBM Granite LLM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Query IBM Granite LLM</h1>
+        <form id="query-form" class="mt-3">
+            <div class="form-group">
+                <label for="query">Enter your query:</label>
+                <input type="text" class="form-control" id="query" name="query" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="result" class="mt-4"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script>
+        $('#query-form').on('submit', function(event) {
+            event.preventDefault();
+            var query = $('#query').val();
+            $.post('/query', { query: query }, function(data) {
+                $('#result').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+            }).fail(function() {
+                $('#result').html('<div class="alert alert-danger">Failed to get response from LLM service</div>');
+            });
+        });
+    </script>
+</body>
+</html>
