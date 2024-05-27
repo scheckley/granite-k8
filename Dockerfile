@@ -40,4 +40,3 @@ RUN git clone https://github.com/huggingface/transformers && \
 
 CMD ["python3", "app.py"]
 
-CMD ["bash"]
