@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Replace this with the actual URL of your IBM Granite LLM service
-LLM_SERVICE_URL = 'http://<your-ibm-granite-llm-service-url>/api/query'
+LLM_SERVICE_URL = 'https://granite-k8-scp012-dxm01.apps.ocp.osprey.hartree.stfc.ac.uk/api/query'
 
 @app.route('/')
 def index():
