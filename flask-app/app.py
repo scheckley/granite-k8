@@ -14,7 +14,7 @@ LLM_SERVICE_URL = 'https://granite-k8-scp012-dxm01.apps.ocp.osprey.hartree.stfc.
 def index():
     return render_template('index.html')
 
-@app.route('/query', methods=['POST'])
+@app.route('/query', methods=['PUT'])
 def query():
     user_query = request.form['query']
     response = requests.post(LLM_SERVICE_URL, json={'query': user_query})
