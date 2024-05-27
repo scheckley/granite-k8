@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: your-docker-registry/ibm-granite-llm
+  repository: dockerhub.io/scheckley/granite
   tag: latest
   pullPolicy: IfNotPresent
 
