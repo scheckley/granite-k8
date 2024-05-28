@@ -17,7 +17,7 @@ def index():
 @app.route('/query', methods=['PUT'])
 def query():
     user_query = request.form['query']
-    response = requests.post(LLM_SERVICE_URL, json={'query': user_query})
+    response = requests.put(LLM_SERVICE_URL, json={'query': user_query})
     
     if response.status_code == 200:
         result = response.json()
@@ -37,7 +37,7 @@ def api_query():
     tokens = tokenizer.encode(user_query, return_tensors='pt')
 
     # Send the tokenized query to the LLM service
-    response = requests.post(LLM_SERVICE_URL, json={'query': tokens.tolist()})
+    response = requests.put(LLM_SERVICE_URL, json={'query': tokens.tolist()})
     
     if response.status_code == 200:
         result = response.json()
