@@ -5,8 +5,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 app = Flask(__name__)
 
 # Initialize the tokenizer
-model = AutoModelForCausalLM.from_pretrained("ibm-granite/granite-8b-code-base")
-tokenizer = AutoTokenizer.from_pretrained("ibm-granite/granite-8b-code-base")
+model = AutoModelForCausalLM.from_pretrained("ibm-granite/granite-3b-code-base")
+tokenizer = AutoTokenizer.from_pretrained("ibm-granite/granite-3b-code-base")
 
 # URL of the IBM Granite LLM service
 LLM_SERVICE_URL = 'https://granite-k8-scp012-dxm01.apps.ocp.osprey.hartree.stfc.ac.uk/'
