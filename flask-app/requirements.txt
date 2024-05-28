@@ -1,2 +1,0 @@
-Flast==2.0.2
-requests==2.26.0
