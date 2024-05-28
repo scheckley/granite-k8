@@ -1,4 +1,17 @@
-replicaCount: 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  granite-llm
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: granite-app
+  template:
+    metadata:
+      labels:
+        app: granite-app
 
 image:
   repository: dockerhub.io/scheckley/granite
@@ -11,14 +24,9 @@ service:
 
 resources:
   limits:
-    cpu: 500m
-    memory: 512Mi
+    cpu: '4'
+    memory: '64Gi'
   requests:
-    cpu: 250m
-    memory: 256Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+    cpu: '8'
+    memory: '64Gi'
+    nvidia.com/gpu: '1'
