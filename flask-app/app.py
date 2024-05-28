@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 import requests
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 app = Flask(__name__)
 
 # Initialize the tokenizer
-tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+model = AutoModelForCausalLM.from_pretrained("ibm-granite/granite-8b-code-base")
+tokenizer = AutoTokenizer.from_pretrained("ibm-granite/granite-8b-code-base")
 
 # URL of the IBM Granite LLM service
 LLM_SERVICE_URL = 'https://granite-k8-scp012-dxm01.apps.ocp.osprey.hartree.stfc.ac.uk/'
@@ -33,8 +34,11 @@ def api_query():
 
     user_query = data['query']
 
+    # Generate
+    generate_ids = model.generate(inputs.input_ids, max_length=30)
+
     # Tokenize the query
-    tokens = tokenizer.encode(user_query, return_tensors='pt')
+    tokens = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
 
     # Send the tokenized query to the LLM service
     response = requests.put(LLM_SERVICE_URL, json={'query': tokens.tolist()})
