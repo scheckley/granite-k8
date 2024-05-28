@@ -24,7 +24,7 @@
         $('#query-form').on('submit', function(event) {
             event.preventDefault();
             var query = $('#query').val();
-            $.post('/query', { query: query }, function(data) {
+            $.put('/query', { query: query }, function(data) {
                 $('#result').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
             }).fail(function() {
                 $('#result').html('<div class="alert alert-danger">Failed to get response from LLM service</div>');
