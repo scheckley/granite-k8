@@ -30,3 +30,4 @@ resources:
     cpu: '8'
     memory: '64Gi'
     nvidia.com/gpu: '1'
+    nodeName: 'ocp-8q24t-worker-gpu-a100x4-dgjsp'
