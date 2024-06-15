@@ -3,7 +3,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
-device = "gpu"
+device = "cuda:0"
 
 model_path = "ibm-granite/granite-3b-code-base"
 
