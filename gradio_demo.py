@@ -48,4 +48,4 @@ def predict(message, history):
             partial_message += new_token
             yield partial_message
 
-gr.ChatInterface(predict).launch()
+gr.ChatInterface(predict).launch(server_port=8443)
