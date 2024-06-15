@@ -33,10 +33,9 @@ RUN apt-get dist-upgrade -y
 RUN apt-get install -y curl python3-pip git
 RUN curl -sSL https://get.docker.com/ | sh
 RUN python3 -m pip install -U pip
-RUN pip3 install torch torchvision torchaudio accelerate flask requests
+RUN pip3 install torch torchvision torchaudio accelerate flask requests gradio
 RUN git clone https://github.com/huggingface/transformers && \
     cd transformers/ && \
     pip install ./
 
-#CMD ["python3", "/usr/local/granite/flask-app/app.py"]
-CMD ["python3", "demo_app.py"]
+CMD ["python3", "gradio_demo.py"]
