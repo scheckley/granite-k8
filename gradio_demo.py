@@ -3,8 +3,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
-#device = "cuda:0"
-device = "cpu"
+device = "cuda"
+#device = "cpu"
 
 #model_path = "ibm-granite/granite-3b-code-base"
 model_path = "facebook/blenderbot-400M-distill"
@@ -33,12 +33,15 @@ def predict(message, history):
     generate_kwargs = dict(
         model_inputs,
         streamer=streamer,
-        max_new_tokens=1024,
+        max_new_tokens=512,
         do_sample=True,
-        top_p=0.95,
-        top_k=1000,
-        temperature=1.0,
+        #top_p=0.95,
+        top_k=0,
+        temperature=0.8,
         num_beams=1,
+        repetition_penalty=1.1,
+        no_repeat_ngram_size=2,
+        pad_token_id=tokenizer.eos_token_id,
         stopping_criteria=StoppingCriteriaList([stop])
         )
     t = Thread(target=model.generate, kwargs=generate_kwargs)
