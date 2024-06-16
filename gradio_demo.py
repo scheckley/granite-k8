@@ -3,7 +3,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
-device = "cuda:0"
+#device = "cuda:0"
+device = "cpu"
 
 model_path = "ibm-granite/granite-3b-code-base"
 
@@ -26,7 +27,7 @@ def predict(message, history):
     messages = "".join(["".join(["\n<human>:"+item[0], "\n<bot>:"+item[1]])
                 for item in history_transformer_format])
 
-    model_inputs = tokenizer([messages], return_tensors="pt").to("cuda")
+    model_inputs = tokenizer([messages], return_tensors="pt").to(device)
     streamer = TextIteratorStreamer(tokenizer, timeout=10., skip_prompt=True, skip_special_tokens=True)
     generate_kwargs = dict(
         model_inputs,
@@ -48,4 +49,4 @@ def predict(message, history):
             partial_message += new_token
             yield partial_message
 
-gr.ChatInterface(predict).launch(server_port=8443)
+gr.ChatInterface(predict).launch(server_name='0.0.0.0', server_port=8443)
