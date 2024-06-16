@@ -6,8 +6,8 @@ from threading import Thread
 device = "cuda"
 #device = "cpu"
 
-#model_path = "ibm-granite/granite-3b-code-base"
-model_path = "facebook/blenderbot-400M-distill"
+model_path = "ibm-granite/granite-8b-code-base"
+#model_path = "facebook/blenderbot-400M-distill"
 
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)
