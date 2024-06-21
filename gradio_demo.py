@@ -37,7 +37,7 @@ def predict(message, history):
         do_sample=True,
         #top_p=0.95,
         top_k=0,
-        temperature=0.8,
+        temperature=0,
         num_beams=1,
         repetition_penalty=1.1,
         no_repeat_ngram_size=2,
