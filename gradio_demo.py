@@ -6,14 +6,19 @@ from threading import Thread
 
 device = "cpu"
 if torch.cuda.is_available():
-    device = "cuda"
+    device = "cuda:0"
+
 
 model_id = "instructlab/granite-7b-lab-GGUF"
 filename = "granite-7b-lab-Q4_K_M.gguf"
 
+# small model for testing
+#model_id = "TheBloke/TinyLlama-1.1B-1T-OpenOrca-GGUF"
+#filename = "tinyllama-1.1b-1t-openorca.Q2_K.gguf"
+
 tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
 model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
-
+model.to(device)
 model.eval()
 
 class StopOnTokens(StoppingCriteria):
@@ -32,15 +37,14 @@ def predict(message, history):
                 for item in history_transformer_format])
 
     model_inputs = tokenizer([messages], return_tensors="pt").to(device)
-    streamer = TextIteratorStreamer(tokenizer, timeout=10., skip_prompt=True, skip_special_tokens=True)
+    streamer = TextIteratorStreamer(tokenizer, timeout=20., skip_prompt=True, skip_special_tokens=True)
     generate_kwargs = dict(
         model_inputs,
         streamer=streamer,
-        max_new_tokens=512,
+        max_new_tokens=150,
         do_sample=True,
-        top_p=0.96,
-        top_k=0,
-        temperature=0,
+        top_p=0.92,
+        top_k=50,
         num_beams=1,
         repetition_penalty=1.1,
         no_repeat_ngram_size=2,
