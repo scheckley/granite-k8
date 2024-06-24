@@ -3,14 +3,17 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
-device = "cuda"
-#device = "cpu"
 
-model_path = "ibm-granite/granite-3b-code-base"
-#model_path = "facebook/blenderbot-400M-distill"
+device = "cpu"
+if torch.cuda.is_available():
+    device = "cuda"
 
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)
+model_id = "instructlab/granite-7b-lab-GGUF"
+filename = "granite-7b-lab-Q4_K_M.gguf"
+
+tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
+model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
+
 model.eval()
 
 class StopOnTokens(StoppingCriteria):
@@ -35,7 +38,7 @@ def predict(message, history):
         streamer=streamer,
         max_new_tokens=512,
         do_sample=True,
-        #top_p=0.95,
+        top_p=0.96,
         top_k=0,
         temperature=0,
         num_beams=1,
@@ -53,4 +56,6 @@ def predict(message, history):
             partial_message += new_token
             yield partial_message
 
-gr.ChatInterface(predict).launch(server_name='0.0.0.0', server_port=8443)
+gr.ChatInterface(predict).launch(server_name='0.0.0.0', server_port=8443, share=True)
+
+
