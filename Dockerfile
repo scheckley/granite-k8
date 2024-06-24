@@ -38,7 +38,7 @@ RUN git clone https://github.com/huggingface/transformers && \
     cd transformers/ && \
     pip install ./
 
-RUN pip uninstall numpy
+RUN pip uninstall -y numpy
 RUN pip install numpy==1.26.4
 
 CMD ["python3", "gradio_demo.py"]
