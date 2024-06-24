@@ -33,9 +33,12 @@ RUN apt-get dist-upgrade -y
 RUN apt-get install -y curl python3-pip git
 RUN curl -sSL https://get.docker.com/ | sh
 RUN python3 -m pip install -U pip
-RUN pip3 install torch torchvision torchaudio accelerate flask requests gradio
+RUN pip3 install torch torchvision torchaudio accelerate requests gradio gguf
 RUN git clone https://github.com/huggingface/transformers && \
     cd transformers/ && \
     pip install ./
+
+RUN pip uninstall numpy
+RUN pip install numpy==1.26.4
 
 CMD ["python3", "gradio_demo.py"]
