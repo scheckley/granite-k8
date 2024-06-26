@@ -15,7 +15,11 @@ filename = "granite-7b-lab-Q4_K_M.gguf"
 
 tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
 model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
-model.to(device)
+
+if torch.cuda.device_count()  >  1:
+  model = nn.DataParallel(model)
+
+model = model.to(device)
 model.eval()
 
 class StopOnTokens(StoppingCriteria):
