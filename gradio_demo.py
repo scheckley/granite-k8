@@ -17,7 +17,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
 model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
 
 if torch.cuda.device_count()  >  1:
-  model = nn.DataParallel(model)
+  model = torch.nn.DataParallel(model)
 
 model = model.to(device)
 model.eval()
