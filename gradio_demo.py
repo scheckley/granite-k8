@@ -1,13 +1,10 @@
 import gradio as gr
 import torch
+torch.cuda.empty_cache()
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
-
-device = "cpu"
-if torch.cuda.is_available():
-    device = "cuda:0"
-
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model_id = "instructlab/granite-7b-lab-GGUF"
 filename = "granite-7b-lab-Q4_K_M.gguf"
