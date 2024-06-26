@@ -35,12 +35,11 @@ RUN curl -sSL https://get.docker.com/ | sh
 RUN python3 -m pip install -U pip
 RUN pip3 install torch torchvision torchaudio accelerate requests gradio gguf
 
-#RUN git clone https://github.com/huggingface/transformers && \
-#    cd transformers/ && \
-#    pip install ./
+RUN git clone https://github.com/huggingface/transformers && \
+    cd transformers/ && \
+    pip install ./
 
 RUN pip uninstall -y numpy
 RUN pip install numpy==1.26.4
-RUN pip install transformers==4.41.1
 
 CMD ["python3", "gradio_demo.py"]
