@@ -6,18 +6,14 @@ from threading import Thread
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model_id = "instructlab/granite-7b-lab-GGUF"
-filename = "granite-7b-lab-Q4_K_M.gguf"
+tokenizer = AutoTokenizer.from_pretrained("ibm-granite/granite-7b-base")
+model = AutoModelForCausalLM.from_pretrained("ibm-granite/granite-7b-base")
 
 # small model for testing
 #model_id = "TheBloke/TinyLlama-1.1B-1T-OpenOrca-GGUF"
 #filename = "tinyllama-1.1b-1t-openorca.Q2_K.gguf"
-
-tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
-model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
-
-if torch.cuda.device_count()  >  1:
-  model = torch.nn.DataParallel(model)
+#tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
+#model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
 
 model = model.to(device)
 model.eval()
