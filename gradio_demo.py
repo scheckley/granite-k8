@@ -10,10 +10,8 @@ tokenizer = AutoTokenizer.from_pretrained("ibm-granite/granite-7b-base")
 model = AutoModelForCausalLM.from_pretrained("ibm-granite/granite-7b-base")
 
 # small model for testing
-#model_id = "TheBloke/TinyLlama-1.1B-1T-OpenOrca-GGUF"
-#filename = "tinyllama-1.1b-1t-openorca.Q2_K.gguf"
-#tokenizer = AutoTokenizer.from_pretrained(model_id, gguf_file=filename)
-#model = AutoModelForCausalLM.from_pretrained(model_id, gguf_file=filename)
+#tokenizer = AutoTokenizer.from_pretrained("TinyLlama/TinyLlama_v1.1")
+#model = AutoModelForCausalLM.from_pretrained("TinyLlama/TinyLlama_v1.1")
 
 model = model.to(device)
 model.eval()
@@ -38,13 +36,12 @@ def predict(message, history):
     generate_kwargs = dict(
         model_inputs,
         streamer=streamer,
-        max_new_tokens=150,
+        max_length=500,
         do_sample=True,
-        top_p=0.92,
-        top_k=50,
-        num_beams=1,
-        repetition_penalty=1.1,
-        no_repeat_ngram_size=2,
+        top_p=1.0,
+        temperature=0.7,
+        repetition_penalty=1.5,
+        num_return_sequences=1,
         pad_token_id=tokenizer.eos_token_id,
         stopping_criteria=StoppingCriteriaList([stop])
         )
